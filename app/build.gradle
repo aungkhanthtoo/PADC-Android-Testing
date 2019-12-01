@@ -23,6 +23,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    // Always show the result of every unit test when running via command line, even if it passes.
+    testOptions.unitTests {
+        includeAndroidResources = true
+    }
+
+
 }
 
 dependencies {
@@ -76,6 +82,23 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+
+    def androidXTestCoreVersion = '1.2.0'
+    def androidXTestExtKotlinRunnerVersion = '1.1.1'
+    def robolectricVersion = '4.3.1'
+    def archTestingVersion = '2.0.0'
+
+    // AndroidX Test - JVM testing
+    testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
+
+    testImplementation "androidx.test:core-ktx:$androidXTestCoreVersion"
+
+    testImplementation "org.robolectric:robolectric:$robolectricVersion"
+
+    testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+
+    testImplementation "org.mockito:mockito-core:3.1.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

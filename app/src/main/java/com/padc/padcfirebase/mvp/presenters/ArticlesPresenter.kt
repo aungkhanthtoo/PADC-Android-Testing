@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.padc.padcfirebase.FakeModelImpl
+import com.padc.padcfirebase.FakeUserModelImpl
 import com.padc.padcfirebase.data.models.FirebaseModel
 import com.padc.padcfirebase.data.models.FirebaseModelImpl
 import com.padc.padcfirebase.data.models.UserAuthenticationModel
@@ -15,8 +17,8 @@ import java.util.*
 
 class ArticlesPresenter: BaseGoogleSignInPresenter<ArticlesView>(), ArticleItemDelegate {
 
-    private val model : FirebaseModel = FirebaseModelImpl
-    private val userModel : UserAuthenticationModel = UserAuthenticationModelImpl
+    private val model : FirebaseModel = FakeModelImpl
+    private val userModel: UserAuthenticationModel = FakeUserModelImpl
     private val clearedLiveData = MutableLiveData<Unit>()
 
     fun onUIReady(owner: LifecycleOwner){

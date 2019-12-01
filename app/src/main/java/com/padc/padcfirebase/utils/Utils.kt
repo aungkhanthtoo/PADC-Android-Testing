@@ -10,7 +10,9 @@ fun getPostedAgoTimeWithTimeStamp(timeStamp: String): String {
     else DateUtils.getRelativeTimeSpanString(long).toString()
 }
 
-fun formatPhoneNumberWith959(number: String): String {
+fun formatPhoneNumberWith959(number: String): String? {
+    if (!number.matches("^[0-9]*".toRegex())) return null
+    if (number.isEmpty()) return null
     return when {
         number.startsWith("959") -> number
         number.startsWith("09") -> "959" + number.substring(2, number.length)

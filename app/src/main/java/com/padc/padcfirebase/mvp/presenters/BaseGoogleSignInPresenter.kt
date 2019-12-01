@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.padc.padcfirebase.FakeUserModelImpl
 import com.padc.padcfirebase.R
 import com.padc.padcfirebase.data.models.UserAuthenticationModel
 import com.padc.padcfirebase.data.models.UserAuthenticationModelImpl
@@ -15,7 +16,7 @@ import com.padc.padcfirebase.mvp.views.BaseGoogleSignInView
 
 abstract class BaseGoogleSignInPresenter<V: BaseGoogleSignInView>: BasePresenter<V>() {
 
-    private val userModel : UserAuthenticationModel = UserAuthenticationModelImpl
+    private val userModel : UserAuthenticationModel = FakeUserModelImpl
 
     fun googleSignIn(context: Context){
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

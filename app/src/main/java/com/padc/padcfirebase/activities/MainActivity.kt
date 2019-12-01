@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), ArticlesView {
     private fun checkIntentForDetailActivity() {
         val detailId = intent.getStringExtra(EXTRA_ARTICLE_ID)
         if ( detailId != null) {
-            navigateToDetail(detailId)
+            //navigateToDetail(detailId)
         }
     }
 
