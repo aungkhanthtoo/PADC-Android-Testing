@@ -15,16 +15,23 @@ object FakeModelImpl: FirebaseModel {
         ArticleVO("67575675", "", "Article4", "Body4", 0, emptyMap(), 0, "27-7-19")
     )
 
+    private val _articles = MutableLiveData<List<ArticleVO>>(articles)
+    private val _article = MutableLiveData<ArticleVO>()
+
     override fun getAllArticles(cleared: LiveData<Unit>): LiveData<List<ArticleVO>> {
-        return MutableLiveData(articles)
+        return _articles
     }
 
     override fun getArticleById(id: String, cleared: LiveData<Unit>): LiveData<ArticleVO> {
-        return MutableLiveData(articles.first())
+        return _article.apply {
+            value = articles.first { it.id == id }
+        }
     }
 
     override fun updateClapCount(count: Int, article: ArticleVO) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        _article.value = articles.first { it.id == article.id }.apply {
+            claps = article.claps + count
+        }
     }
 
     override fun addComment(comment: String, pickedImage: Uri?, article: ArticleVO) {

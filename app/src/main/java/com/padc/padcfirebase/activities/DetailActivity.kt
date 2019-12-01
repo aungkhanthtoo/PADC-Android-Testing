@@ -3,12 +3,9 @@ package com.padc.padcfirebase.activities
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.nfc.NfcAdapter.EXTRA_ID
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.VISIBLE
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -17,7 +14,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseUser
 import com.padc.padcfirebase.R
 import com.padc.padcfirebase.adapters.CommentsAdapter
+import com.padc.padcfirebase.data.models.FirebaseModelImpl
+import com.padc.padcfirebase.data.models.UserAuthenticationModelImpl
 import com.padc.padcfirebase.data.vos.ArticleVO
+import com.padc.padcfirebase.mvp.presenters.AritcleDetailViewModelFactory
 import com.padc.padcfirebase.mvp.presenters.ArticleDetailPresenter
 import com.padc.padcfirebase.mvp.views.ArticleDetailView
 import com.padc.padcfirebase.utils.ScreenUtils
@@ -38,7 +38,7 @@ class DetailActivity : AppCompatActivity(), ArticleDetailView {
         setupListener()
         setupRecyclerView()
         val id = intent.getStringExtra(EXTRA_ID)!!
-        presenter.onUIReady(this,id)
+        presenter.onUIReady(this, id)
     }
 
     override fun navigateToGoogleSignInScreen(signInIntent: Intent, rcGoogleSign: Int) {
@@ -49,7 +49,7 @@ class DetailActivity : AppCompatActivity(), ArticleDetailView {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode != RC_PICK_IMAGE) {
             presenter.onActivityResult(requestCode, resultCode, data, this)
-        }else {
+        } else {
 
             if (resultCode == RESULT_OK && data != null && data.data != null) {
                 val uri = data.data
@@ -75,7 +75,7 @@ class DetailActivity : AppCompatActivity(), ArticleDetailView {
     }
 
     override fun showGoogleLoginSuccess(user: FirebaseUser) {
-       showCommentInputView()
+        showCommentInputView()
     }
 
     override fun showArticle(data: ArticleVO) {
@@ -111,9 +111,11 @@ class DetailActivity : AppCompatActivity(), ArticleDetailView {
     }
 
 
-
     private fun setupPresenter() {
-        presenter = ViewModelProviders.of(this).get(ArticleDetailPresenter::class.java)
+        val viewModelFactory =
+            AritcleDetailViewModelFactory(FirebaseModelImpl, UserAuthenticationModelImpl)
+        presenter =
+            ViewModelProviders.of(this, viewModelFactory).get(ArticleDetailPresenter::class.java)
         presenter.initPresenter(this)
     }
 
