@@ -4,7 +4,10 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.padc.padcfirebase.data.models.FirebaseModel
+import com.padc.padcfirebase.data.models.UserAuthenticationModelImpl
 import com.padc.padcfirebase.data.vos.ArticleVO
+import com.padc.padcfirebase.data.vos.CommentVO
+import com.padc.padcfirebase.data.vos.UserVO
 
 object FakeModelImpl: FirebaseModel {
 
@@ -35,6 +38,19 @@ object FakeModelImpl: FirebaseModel {
     }
 
     override fun addComment(comment: String, pickedImage: Uri?, article: ArticleVO) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val id = System.currentTimeMillis().toString()
+
+        val newComment = CommentVO(
+            id, "", comment,
+            UserVO(
+                "",
+                "",
+                "")
+        )
+
+
+        val update = article.comments + hashMapOf(id to newComment)
+
+        _article.value = article.copy(comments = update)
     }
 }

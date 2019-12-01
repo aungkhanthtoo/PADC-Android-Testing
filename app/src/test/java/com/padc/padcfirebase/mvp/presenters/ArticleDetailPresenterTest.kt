@@ -14,6 +14,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Rule
 import org.mockito.ArgumentMatchers
+import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.mockito.verification.VerificationMode
 
@@ -81,6 +82,23 @@ class ArticleDetailPresenterTest {
 
     @Test
     fun onCommentClicked() {
+        val lifecycleOwner = object : LifecycleOwner {
+
+            override fun getLifecycle(): Lifecycle {
+                return LifecycleRegistry(this).apply {
+                    handleLifecycleEvent(Lifecycle.Event.ON_RESUME)
+                }
+            }
+
+        }
+
+        val article = ArticleVO("67575675", "", "Article4", "Body4", 0, emptyMap(), 0, "27-7-19")
+
+        presenter.onUIReady(lifecycleOwner, article.id)
+        verify(view).showArticle(article)
+
+        presenter.onCommentSendClicked("Testing")
+        verify(view, times(2)).showArticle(any())
 
     }
 
@@ -90,5 +108,13 @@ class ArticleDetailPresenterTest {
 
     @Test
     fun onImagePicked() {
+        
+
     }
+
+    private fun <T> any(): T {
+        Mockito.any<T>()
+        return uninitialized()
+    }
+    private fun <T> uninitialized(): T = null as T
 }
