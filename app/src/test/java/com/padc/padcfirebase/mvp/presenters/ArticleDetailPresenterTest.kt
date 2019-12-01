@@ -108,7 +108,7 @@ class ArticleDetailPresenterTest {
 
     @Test
     fun onImagePicked() {
-        
+
 
     }
 

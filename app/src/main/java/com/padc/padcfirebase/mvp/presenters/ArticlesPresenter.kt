@@ -17,8 +17,8 @@ import java.util.*
 
 class ArticlesPresenter: BaseGoogleSignInPresenter<ArticlesView>(), ArticleItemDelegate {
 
-    private val model : FirebaseModel = FakeModelImpl
-    private val userModel: UserAuthenticationModel = FakeUserModelImpl
+    private val model : FirebaseModel = FirebaseModelImpl
+    private val userModel: UserAuthenticationModel = UserAuthenticationModelImpl
     private val clearedLiveData = MutableLiveData<Unit>()
 
     fun onUIReady(owner: LifecycleOwner){
